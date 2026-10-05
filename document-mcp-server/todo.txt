@@ -1,0 +1,102 @@
+Install the dependencies
+From your project folder:
+
+uv add "mcp[cli]" pypdf python-docx
+
+Your project should look like:
+
+document-mcp-server/
+│
+├── server.py
+│
+├── documents/
+│   ├── notes.txt
+│   ├── project.md
+│   ├── report.pdf
+│   └── resume.docx
+│
+├── pyproject.toml
+└── uv.lock
+
+Then start the MCP server:
+
+uv run mcp dev server.py
+
+What each tool does
+1. list_files()
+The AI can ask:
+
+"What documents do I have?"
+
+It returns something like:
+
+[
+  {
+    "name": "report.pdf",
+    "path": "report.pdf",
+    "type": ".pdf",
+    "size_bytes": 245123
+  },
+  {
+    "name": "notes.txt",
+    "path": "notes.txt",
+    "type": ".txt",
+    "size_bytes": 1834
+  }
+]
+
+2. read_file()
+read_file("notes.txt")
+
+Returns the actual contents.
+
+3. search_files()
+For example:
+
+search_files("machine learning")
+
+It searches across:
+
+TXT
+MD
+PDF
+DOCX
+
+and returns matching files plus a small snippet around the match.
+
+4. get_document()
+get_document("report.pdf")
+
+returns metadata and extracted text:
+
+{
+  "name": "report.pdf",
+  "type": ".pdf",
+  "size_bytes": 245123,
+  "characters": 8234,
+  "truncated": false,
+  "content": "..."
+}
+
+One important improvement
+For a real project, I would not make search_files() scan every PDF/DOCX every time. That's fine for learning, but with 1,000+ documents it'll become slow.
+
+The next version should look like:
+
+Documents
+    ↓
+Text extraction
+    ↓
+Chunking
+    ↓
+Embeddings
+    ↓
+Vector database
+    ↓
+Semantic search
+    ↓
+MCP
+    ↓
+AI
+
+That turns this from a basic file MCP into a proper RAG document assistant, which is much stronger as a portfolio project.
