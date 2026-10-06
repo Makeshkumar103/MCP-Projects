@@ -1,0 +1,21 @@
+{
+    "mcpServers": {
+      "filesystem": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-filesystem",
+          "/Users/akashb/Downloads/MCP-folder" 
+        ]
+      },
+      "devto-platform": {
+          "command": "/Library/Frameworks/Python.framework/Versions/3.11/bin/uv",
+          "args": [
+            "--directory",
+            "/Users/akashb/Documents/YT/MCP-series",
+            "run",
+            "dev-server.py"
+          ]
+        }
+    }
+  }
